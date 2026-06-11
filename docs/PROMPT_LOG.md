@@ -101,3 +101,34 @@ Implement the minimal but professional CrewAI pipeline foundation: config loadin
 - **CrewAI version**: 1.14.6 — `Task.output_file` and `Task.context` both exist; `Process.sequential` confirmed.
 - **Python version on this machine**: 3.13.9 (despite `requires-python = ">=3.11"`).
 - **19/19 tests pass** with zero API calls required.
+
+---
+
+## Entry 003 - Documentation Update and Final Review
+
+**Date:** 2026-06-11  
+**Phase:** Documentation, prompt log, and final validation  
+**Author:** Areen Tarabeh  
+**Tool:** Codex / ChatGPT
+
+### Purpose
+
+Update the project documentation after the latest implementation was pushed, while avoiding code conflicts by editing documentation files only.
+
+### Prompt Summary
+
+> I finished and pushed the latest code. Please pull the latest repo and work only on documentation so we avoid conflicts. Update README.md with setup and run instructions, update docs/PROMPT_LOG.md with the prompts/workflow we used, add a short contribution section, run tests, commit, and push.
+
+### Files Created / Modified
+
+| File | Action |
+|---|---|
+| README.md | Updated with contribution section and verified setup/run/test instructions |
+| docs/PROMPT_LOG.md | Updated with Areen documentation workflow entry |
+
+### Key Decisions Recorded
+
+- Worked only on README.md and docs/PROMPT_LOG.md to reduce merge conflicts with implementation changes.
+- Verified setup and test flow: plain uv sync installs runtime dependencies, while tests require uv sync --extra dev before uv run pytest.
+- Recorded team contributions clearly: Saleh handled implementation, testing, pipeline, LaTeX/figures; Areen handled documentation, prompt log, review, and final validation.
+- Ran the test suite before committing the documentation update.

@@ -154,3 +154,10 @@ xelatex latex/main.tex
 - Final Moodle submission filename: `salareen-ex03.pdf`
 - The PDF is generated inside `results/` and should be copied/renamed for submission.
 - No API keys or secrets should be committed — use `.env-example` only.
+
+---
+
+## Contributions
+
+- Saleh: implementation, testing, pipeline, LaTeX/figures
+- Areen: documentation, prompt log, review, final validation
