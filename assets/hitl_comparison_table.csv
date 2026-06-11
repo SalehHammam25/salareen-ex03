@@ -1,0 +1,7 @@
+Criterion,Full Automation,HITL System
+Throughput,High,Moderate
+Edge-case error rate,High,Low
+Accountability,Diffuse,Clear
+Cost per decision,Low,Higher
+Auditability,Poor,Strong
+Human oversight,None,Selective

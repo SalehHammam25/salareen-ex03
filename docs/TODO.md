@@ -60,11 +60,13 @@ Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 
 ## Phase 4: Python Graph and Table Generation
 
-- [ ] Create `assets/generate_figures.py`
-- [ ] Generate at least one matplotlib/seaborn figure (e.g., HITL decision flow, accuracy comparison)
-- [ ] Save figures as `assets/hitl_figure_1.png` (and others as needed)
-- [ ] Verify figures render correctly and have appropriate labels/titles
-- [ ] Ensure figure generation is deterministic (set random seeds if applicable)
+- [x] Create `assets/generate_figures.py` — matplotlib only, Agg backend, pathlib, all under 150 lines
+- [x] Generate `assets/hitl_decision_flow.png` — confidence-based routing flow diagram (57 KB)
+- [x] Generate `assets/automation_risk_tradeoff.png` — grouped bar chart, risk by domain (40 KB)
+- [x] Generate `assets/hitl_comparison_table.csv` — 7-row comparison table (214 bytes)
+- [x] Figures have clear titles, axis labels, and readable layout
+- [x] Generation is deterministic (fixed data, no random elements; CSV byte-identical across runs)
+- [x] Add `tests/test_generate_figures.py` — 18 tests; verifies PNG signature, size, CSV header/rows, determinism (114 tests total passing)
 
 ---
 
