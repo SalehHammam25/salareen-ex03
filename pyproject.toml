@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "salareen-ex03"
+version = "0.1.0"
+description = "CrewAI multi-agent pipeline for generating an academic article on Human-in-the-Loop AI"
+authors = [
+    { name = "Saleh Hammam" },
+    { name = "Areen Tarabeh" },
+]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+dependencies = [
+    # Multi-agent orchestration
+    "crewai>=0.80.0",
+    "crewai-tools>=0.14.0",
+
+    # LLM providers
+    "anthropic>=0.40.0",
+    "openai>=1.50.0",
+
+    # Environment management
+    "python-dotenv>=1.0.0",
+
+    # Data and figures
+    "matplotlib>=3.9.0",
+    "pandas>=2.2.0",
+
+    # YAML config loading
+    "pyyaml>=6.0.2",
+
+    # Typing support
+    "pydantic>=2.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.7.0",
+]
+
+[project.scripts]
+run-pipeline = "src.pipeline.main:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

@@ -1,0 +1,57 @@
+# config/tasks.yaml
+# Task configuration — description, expected output, and agent assignment.
+# This file is loaded by src/pipeline/main.py at runtime.
+# TODO: refine descriptions and expected_output during Phase 2 and 3.
+
+research_task:
+  description: >
+    Research the topic "Human-in-the-Loop AI Agents: Why Full Automation Is Not Always the Goal".
+    Collect definitions, motivations, architectural patterns, case studies,
+    failure modes of full automation, and recent literature (2020–2025).
+    Produce structured research notes with citations.
+  expected_output: >
+    A markdown file (results/research_notes.md) with organized sections:
+    definitions, motivations, patterns, case studies, bibliography.
+  output_file: "results/research_notes.md"
+
+outline_task:
+  description: >
+    Using the research notes, create a detailed article outline for a ~15-page
+    academic paper. Define each section's title, purpose, approximate length,
+    and key points to cover.
+  expected_output: >
+    A markdown file (results/article_outline.md) with the full article structure,
+    section by section, including guidance for where to place figures and tables.
+  output_file: "results/article_outline.md"
+
+writer_task:
+  description: >
+    Write the full article in academic prose, following the outline exactly.
+    Include inline citations using [Author, Year] notation. Flag figure
+    insertion points with [FIGURE: description]. Write the Hebrew/BiDi section
+    in Hebrew as instructed by the outline.
+  expected_output: >
+    A markdown file (results/article_draft.md) containing the complete article
+    draft, approximately 15 pages of content, with all required elements.
+  output_file: "results/article_draft.md"
+
+reviewer_task:
+  description: >
+    Review the article draft critically. Check for: academic tone, factual
+    accuracy, citation completeness, section balance, and presence of all
+    required elements (formula, table, BiDi, figure placeholders, bibliography).
+    Produce a final improved version and a separate review notes file.
+  expected_output: >
+    Two files: results/article_final.md (improved article) and
+    results/review_notes.md (list of changes made and remaining issues).
+  output_file: "results/article_final.md"
+
+latex_task:
+  description: >
+    Convert the final article to XeLaTeX source. Apply the project template
+    (cover page, TOC, headers/footers, polyglossia for Hebrew). Insert figure
+    commands for assets/ images. Format the bibliography as BibTeX.
+  expected_output: >
+    Two files: latex/main.tex (complete XeLaTeX source) and
+    latex/refs.bib (BibTeX bibliography). The source must compile with xelatex.
+  output_file: "latex/main.tex"
