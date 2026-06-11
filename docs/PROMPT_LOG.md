@@ -60,3 +60,44 @@ Initialize the project repository with a professional skeleton and all planning 
 ---
 
 <!-- Add new entries below this line in the same format -->
+
+---
+
+## Entry 002 — Phase 2: CrewAI Pipeline Foundation
+
+**Date:** 2026-06-11  
+**Phase:** Phase 2 — CrewAI Agents and Tasks  
+**Author:** Saleh Hammam  
+**Tool:** Claude Code (claude-sonnet-4-6)
+
+### Purpose
+
+Implement the minimal but professional CrewAI pipeline foundation: config loading, agent factory, task factory, crew builder, main entry point, and a full test suite — all without triggering real LLM calls.
+
+### Prompt Summary
+
+> Implement Phase 2 only. Create: config loader (`src/tools/config_loader.py`), agent factory (`src/agents/factory.py`), task factory (`src/tasks/factory.py`), pipeline builder (`src/pipeline/crew_builder.py`), main entry point (`src/main.py`) with `--dry-run` mode, and two test files. Update README, TODO, and PROMPT_LOG. Do NOT generate the article or PDF.
+
+### Files Created / Modified
+
+| File | Action |
+|---|---|
+| `src/tools/config_loader.py` | Created — YAML loader with `ConfigError` validation |
+| `src/agents/factory.py` | Created — `create_agents()` factory from agents.yaml |
+| `src/tasks/factory.py` | Created — `create_tasks()` factory with sequential context chaining |
+| `src/pipeline/crew_builder.py` | Created — `build_crew()` assembles Crew with sequential Process |
+| `src/main.py` | Created — `--dry-run` (no LLM) and normal run (requires API keys) |
+| `tests/test_config_loader.py` | Created — 8 tests: happy path + error paths with monkeypatching |
+| `tests/test_pipeline_dry_run.py` | Created — 11 tests: factory assertions + dry-run integration |
+| `README.md` | Updated — real setup/usage/test commands |
+| `docs/TODO.md` | Updated — Phase 1 complete, Phase 2 complete |
+| `docs/PROMPT_LOG.md` | Updated — this entry |
+
+### Key Decisions Recorded
+
+- **Config-driven factory pattern** chosen over one-file-per-agent: keeps every file under 150 lines and centralizes agent/task parameters in YAML.
+- **Sequential context chaining**: each task receives all preceding tasks as `context`, so later agents (Writer, Reviewer) can read earlier outputs.
+- **`--dry-run` mode** constructs all Agent and Task objects (no LLM calls) and prints a readable pipeline summary.
+- **CrewAI version**: 1.14.6 — `Task.output_file` and `Task.context` both exist; `Process.sequential` confirmed.
+- **Python version on this machine**: 3.13.9 (despite `requires-python = ">=3.11"`).
+- **19/19 tests pass** with zero API calls required.

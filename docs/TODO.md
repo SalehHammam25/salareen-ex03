@@ -1,7 +1,7 @@
 # TODO — salareen-ex03
 
 **Project:** Human-in-the-Loop AI Agents: Why Full Automation Is Not Always the Goal  
-**Last updated:** 2026-06-11
+**Last updated:** 2026-06-11 (Phase 2 complete)
 
 Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 
@@ -17,27 +17,27 @@ Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 - [x] Write `docs/PROMPT_LOG.md` — first entry
 - [x] Create `pyproject.toml` with planned dependencies
 - [x] Create `.env-example`
-- [ ] Review all docs with team member (Areen)
-- [ ] Finalize agent roles and task descriptions in `config/agents.yaml` and `config/tasks.yaml`
+- [x] Review all docs with team member (Areen)
+- [x] Finalize agent roles and task descriptions in `config/agents.yaml` and `config/tasks.yaml`
 
 ---
 
 ## Phase 2: CrewAI Agents and Tasks
 
-- [ ] Implement `src/agents/research_agent.py`
-- [ ] Implement `src/agents/outline_agent.py`
-- [ ] Implement `src/agents/writer_agent.py`
-- [ ] Implement `src/agents/reviewer_agent.py`
-- [ ] Implement `src/agents/latex_agent.py`
-- [ ] Implement `src/tasks/research_tasks.py`
-- [ ] Implement `src/tasks/outline_tasks.py`
-- [ ] Implement `src/tasks/writer_tasks.py`
-- [ ] Implement `src/tasks/reviewer_tasks.py`
-- [ ] Implement `src/tasks/latex_tasks.py`
-- [ ] Implement `src/tools/file_tools.py`
-- [ ] Implement `src/tools/search_tools.py`
-- [ ] Implement `src/pipeline/context.py`
-- [ ] Add unit tests for agent/task output schemas in `tests/`
+> Architecture decision: agents and tasks are config-driven (YAML → factory functions)
+> rather than one file per agent. This keeps the code lean and under 150 lines/file.
+
+- [x] Implement `src/tools/config_loader.py` — YAML loader with validation
+- [x] Implement `src/agents/factory.py` — creates all 5 Agent objects from agents.yaml
+- [x] Implement `src/tasks/factory.py` — creates all 5 Task objects with sequential context
+- [x] Implement `src/pipeline/crew_builder.py` — assembles the Crew
+- [x] Implement `src/main.py` — `--dry-run` and normal run modes
+- [x] Add `tests/test_config_loader.py` — 8 tests, no API calls
+- [x] Add `tests/test_pipeline_dry_run.py` — 11 tests, no API calls
+- [x] All 19 tests passing (`uv run pytest`)
+- [x] Dry-run verified: `uv run python -m src.main --dry-run`
+- [ ] Implement `src/tools/file_tools.py` — file read/write helpers (Phase 3)
+- [ ] Implement `src/tools/search_tools.py` — web search wrapper (Phase 3)
 
 ---
 

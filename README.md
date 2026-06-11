@@ -97,32 +97,53 @@ salareen-ex03/
 
 ## Setup Instructions
 
-> Full setup instructions will be added after the implementation phase.
-
-**Prerequisites (planned):**
-- Python 3.11+
+**Prerequisites:**
+- Python 3.11+ (project currently runs on 3.13)
 - [uv](https://docs.astral.sh/uv/) package manager
-- A LaTeX distribution (MiKTeX or TeX Live) with `xelatex`
-- API key for OpenAI or Anthropic (see `.env-example`)
+- A LaTeX distribution (MiKTeX or TeX Live) with `xelatex` — needed for Phase 5
+- API key for OpenAI or Anthropic (see `.env-example`) — needed for Phase 3+
 
-**Install (planned):**
+**Install:**
 ```powershell
-uv sync
+# Install all runtime + dev dependencies
+uv sync --extra dev
+
+# Set up environment variables
 copy .env-example .env
-# Edit .env with your real API keys
+# Edit .env and add your API key(s)
 ```
 
 ---
 
 ## Usage Instructions
 
-> Will be completed after implementation.
+### Inspect the pipeline without any API calls (dry-run)
 
 ```powershell
-# Run the full pipeline
-uv run python -m src.pipeline.main
+uv run python -m src.main --dry-run
+```
 
-# Compile LaTeX manually
+This prints all 5 configured agents and tasks with their roles, output files, and dependencies — useful for verifying the setup before spending API credits.
+
+### Run the tests
+
+```powershell
+uv run pytest
+```
+
+All tests run offline with no API keys required.
+
+### Run the full pipeline (requires API keys in `.env`)
+
+```powershell
+uv run python -m src.main
+```
+
+> Real LLM calls will be made. Ensure `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` is set in your `.env` file.
+
+### Compile LaTeX to PDF (Phase 5+)
+
+```powershell
 xelatex latex/main.tex
 ```
 
