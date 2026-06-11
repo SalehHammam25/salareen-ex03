@@ -56,10 +56,18 @@ def test_check_outputs_prints_header(capsys):
     assert "OUTPUT CHECK" in capsys.readouterr().out
 
 
-def test_check_outputs_reports_missing_when_results_absent(capsys):
+def test_check_outputs_reports_missing_when_results_absent(tmp_path, monkeypatch, capsys):
+    import src.pipeline.article_pipeline as ap
+
+    original = ap.expected_output_paths
+
+    def _patched(base_dir=None):
+        return original(base_dir=tmp_path)
+
+    monkeypatch.setattr(ap, "expected_output_paths", _patched)
+
     main(argv=["--check-outputs"])
     out = capsys.readouterr().out
-    # In a clean repo no output files exist yet
     assert "Missing" in out or "incomplete" in out.lower()
 
 

@@ -1,18 +1,6 @@
-"""Phase 3 pipeline entry point — registered as the 'run-pipeline' script.
+"""Phase 3/5 pipeline entry point — 'run-pipeline' script.
 
-Usage
------
-Show expected output paths, no LLM calls:
-    uv run run-pipeline --dry-run
-
-Report which output files are present / missing:
-    uv run run-pipeline --check-outputs
-
-Write deterministic offline markdown files (no API calls):
-    uv run run-pipeline --offline-generate
-
-Run the full pipeline (requires API keys in .env):
-    uv run run-pipeline
+Modes: --dry-run | --check-outputs | --offline-generate | --build-latex | (default: run)
 """
 
 from __future__ import annotations
@@ -88,6 +76,15 @@ def cmd_offline_generate() -> None:
     print(f"\n{len(written)} files written. No API calls were made.\n")
 
 
+def cmd_build_latex() -> None:
+    from src.pipeline.latex_builder import build_latex_files
+    print("\n=== BUILD LATEX ===\n")
+    written = build_latex_files()
+    for name in written:
+        print(f"  [WRITTEN]  latex/{name}")
+    print(f"\n{len(written)} files written. No API calls were made.\n")
+
+
 def cmd_run(crew_factory: Callable[[], Any] | None = None) -> None:
     load_dotenv()
     missing = _missing_api_keys()
@@ -121,21 +118,14 @@ def main(
         prog="run-pipeline",
         description="salareen-ex03: article generation pipeline",
     )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Print expected output paths and current file state; no LLM calls.",
-    )
-    parser.add_argument(
-        "--check-outputs",
-        action="store_true",
-        help="Report which expected output files are present or missing.",
-    )
-    parser.add_argument(
-        "--offline-generate",
-        action="store_true",
-        help="Write deterministic offline markdown files to results/; no API calls.",
-    )
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Print expected output paths; no LLM calls.")
+    parser.add_argument("--check-outputs", action="store_true",
+                        help="Report which expected output files are present or missing.")
+    parser.add_argument("--offline-generate", action="store_true",
+                        help="Write offline markdown files to results/; no API calls.")
+    parser.add_argument("--build-latex", action="store_true",
+                        help="Write latex/main.tex and refs.bib; no API calls.")
     args = parser.parse_args(argv)
 
     if args.dry_run:
@@ -144,6 +134,8 @@ def main(
         cmd_check_outputs()
     elif args.offline_generate:
         cmd_offline_generate()
+    elif args.build_latex:
+        cmd_build_latex()
     else:
         cmd_run(crew_factory=crew_factory)
 

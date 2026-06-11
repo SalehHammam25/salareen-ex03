@@ -72,17 +72,18 @@ Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 
 ## Phase 5: LaTeX PDF Generation
 
-- [ ] Create `latex/main.tex` with full document structure
-- [ ] Create `latex/refs.bib` with bibliography entries
-- [ ] Configure XeLaTeX preamble: `polyglossia`, `fontspec`, Hebrew/BiDi support
-- [ ] Set up document class with headers and footers
-- [ ] Add cover page in LaTeX
-- [ ] Add table of contents
-- [ ] Add figure inclusion commands for `assets/` images
-- [ ] Add table environment
-- [ ] Add mathematical formula
-- [ ] Add Hebrew/BiDi section using `polyglossia` and `bidi`
-- [ ] Add bibliography with `\cite{}` references
+- [x] Create `latex/main.tex` with full document structure (via `src/pipeline/latex_builder.py`)
+- [x] Create `latex/refs.bib` with bibliography entries
+- [x] Configure XeLaTeX preamble: `polyglossia`, `fontspec`, Hebrew/BiDi support
+- [x] Set up document class with headers and footers
+- [x] Add cover page in LaTeX (`\maketitle`)
+- [x] Add table of contents (`\tableofcontents`)
+- [x] Add figure inclusion commands for `assets/` images (hitl_decision_flow, automation_risk_tradeoff)
+- [x] Add table environment (`\begin{tabular}`)
+- [x] Add mathematical formula (`\begin{equation}` with HITL loss bound)
+- [x] Add Hebrew/BiDi section using `\begin{otherlanguage}{hebrew}`
+- [x] Add bibliography with `\cite{}` references and `\bibliography{refs}`
+- [x] Add `--build-latex` CLI flag to `run-pipeline` (137 tests passing)
 - [ ] Test compilation: `xelatex latex/main.tex` exits cleanly
 - [ ] Verify PDF visual output: cover, TOC, figures, BiDi, bibliography
 - [ ] Output final PDF to `results/salareen-ex03.pdf`
