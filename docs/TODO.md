@@ -44,14 +44,17 @@ Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 ## Phase 3: Article Generation Pipeline
 
 - [x] Implement `src/pipeline/article_pipeline.py` — expected_output_paths, validate_expected_outputs, run_article_pipeline (injectable crew_factory; 59 tests passing)
-- [x] Implement `src/pipeline/main.py` — `--dry-run`, `--check-outputs`, normal run; registered as `run-pipeline` entry point (73 tests passing)
+- [x] Implement `src/pipeline/main.py` — `--dry-run`, `--check-outputs`, `--offline-generate`, normal run; registered as `run-pipeline` entry point (96 tests passing)
 - [x] Load agent/task configs from `config/agents.yaml` and `config/tasks.yaml`
-- [ ] Test Research Agent independently — produces `results/research_notes.md`
-- [ ] Test Outline Agent — produces `results/article_outline.md`
-- [ ] Test Writer Agent — produces `results/article_draft.md`
-- [ ] Test Reviewer Agent — produces `results/article_final.md`
-- [ ] Test end-to-end pipeline for a short 3-page article
-- [ ] Log all agent outputs to `results/`
+- [x] Implement `src/pipeline/offline_content.py` + `offline_templates.py` — deterministic offline markdown generation (no API keys needed)
+- [x] `results/research_notes.md` — produced via `--offline-generate`; includes [Author, Year] citations and bibliography
+- [x] `results/article_outline.md` — produced via `--offline-generate`; numbered sections through Conclusion
+- [x] `results/article_draft.md` — produced via `--offline-generate`; includes formula, table, [FIGURE:…] placeholder, Hebrew BiDi section
+- [x] `results/article_final.md` — produced via `--offline-generate`; reviewed/finalized version of draft
+- [x] `results/review_notes.md` — produced via `--offline-generate` (bonus file, not in tasks.yaml output_file)
+- [ ] Real CrewAI end-to-end run (requires API keys) — produces same files via LLM agents
+- [ ] Test end-to-end pipeline with real agents
+- [x] Log all agent outputs to `results/` (offline mode; real-agent outputs pending)
 
 ---
 

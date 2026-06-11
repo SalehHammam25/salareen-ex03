@@ -8,6 +8,9 @@ Show expected output paths, no LLM calls:
 Report which output files are present / missing:
     uv run run-pipeline --check-outputs
 
+Write deterministic offline markdown files (no API calls):
+    uv run run-pipeline --offline-generate
+
 Run the full pipeline (requires API keys in .env):
     uv run run-pipeline
 """
@@ -17,6 +20,7 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+from pathlib import Path
 from typing import Any, Callable
 
 from dotenv import load_dotenv  # top-level so tests can patch it
@@ -27,6 +31,16 @@ from src.pipeline.article_pipeline import (
     validate_expected_outputs,
 )
 
+_PROJECT_ROOT = Path(__file__).parent.parent.parent
+
+
+def _rel(p: Path) -> str:
+    """Return a project-root-relative string for *p* (safe for all consoles)."""
+    try:
+        return str(p.relative_to(_PROJECT_ROOT))
+    except ValueError:
+        return p.name
+
 
 def _missing_api_keys() -> list[str]:
     return [k for k in ("OPENAI_API_KEY", "ANTHROPIC_API_KEY") if not os.environ.get(k)]
@@ -35,7 +49,7 @@ def _missing_api_keys() -> list[str]:
 def _print_output_paths() -> None:
     print("Expected output files (from config/tasks.yaml):")
     for p in expected_output_paths():
-        print(f"  {p}")
+        print(f"  {_rel(p)}")
     print()
 
 
@@ -55,14 +69,23 @@ def cmd_check_outputs() -> None:
     if state.present:
         print(f"Present ({len(state.present)}):")
         for p in state.present:
-            print(f"  [OK]  {p}")
+            print(f"  [OK]  {_rel(p)}")
     if state.missing:
         print(f"Missing ({len(state.missing)}):")
         for p in state.missing:
-            print(f"  [--]  {p}")
+            print(f"  [--]  {_rel(p)}")
     print()
     print("Complete." if state.is_complete else "Pipeline outputs incomplete.")
     print()
+
+
+def cmd_offline_generate() -> None:
+    from src.pipeline.offline_content import generate_all
+    print("\n=== OFFLINE GENERATE ===\n")
+    written = generate_all()
+    for name in written:
+        print(f"  [WRITTEN]  results/{name}")
+    print(f"\n{len(written)} files written. No API calls were made.\n")
 
 
 def cmd_run(crew_factory: Callable[[], Any] | None = None) -> None:
@@ -84,7 +107,7 @@ def cmd_run(crew_factory: Callable[[], Any] | None = None) -> None:
     if result.state.missing:
         print("  Still missing:")
         for p in result.state.missing:
-            print(f"    {p}")
+            print(f"    {_rel(p)}")
     if result.kickoff_result:
         print(f"\n{result.kickoff_result}")
 
@@ -108,12 +131,19 @@ def main(
         action="store_true",
         help="Report which expected output files are present or missing.",
     )
+    parser.add_argument(
+        "--offline-generate",
+        action="store_true",
+        help="Write deterministic offline markdown files to results/; no API calls.",
+    )
     args = parser.parse_args(argv)
 
     if args.dry_run:
         cmd_dry_run()
     elif args.check_outputs:
         cmd_check_outputs()
+    elif args.offline_generate:
+        cmd_offline_generate()
     else:
         cmd_run(crew_factory=crew_factory)
 
