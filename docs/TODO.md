@@ -44,8 +44,8 @@ Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 ## Phase 3: Article Generation Pipeline
 
 - [x] Implement `src/pipeline/article_pipeline.py` — expected_output_paths, validate_expected_outputs, run_article_pipeline (injectable crew_factory; 59 tests passing)
-- [ ] Implement `src/pipeline/main.py` — crew assembly and execution
-- [ ] Load agent/task configs from `config/agents.yaml` and `config/tasks.yaml`
+- [x] Implement `src/pipeline/main.py` — `--dry-run`, `--check-outputs`, normal run; registered as `run-pipeline` entry point (73 tests passing)
+- [x] Load agent/task configs from `config/agents.yaml` and `config/tasks.yaml`
 - [ ] Test Research Agent independently — produces `results/research_notes.md`
 - [ ] Test Outline Agent — produces `results/article_outline.md`
 - [ ] Test Writer Agent — produces `results/article_draft.md`
