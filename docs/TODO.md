@@ -36,13 +36,14 @@ Status legend: `[ ]` = not started, `[~]` = in progress, `[x]` = done
 - [x] Add `tests/test_pipeline_dry_run.py` — 11 tests, no API calls
 - [x] All 19 tests passing (`uv run pytest`)
 - [x] Dry-run verified: `uv run python -m src.main --dry-run`
-- [ ] Implement `src/tools/file_tools.py` — file read/write helpers (Phase 3)
-- [ ] Implement `src/tools/search_tools.py` — web search wrapper (Phase 3)
+- [x] Implement `src/tools/file_tools.py` — file read/write helpers
+- [x] Implement `src/tools/search_tools.py` — web search wrapper
 
 ---
 
 ## Phase 3: Article Generation Pipeline
 
+- [x] Implement `src/pipeline/article_pipeline.py` — expected_output_paths, validate_expected_outputs, run_article_pipeline (injectable crew_factory; 59 tests passing)
 - [ ] Implement `src/pipeline/main.py` — crew assembly and execution
 - [ ] Load agent/task configs from `config/agents.yaml` and `config/tasks.yaml`
 - [ ] Test Research Agent independently — produces `results/research_notes.md`
